@@ -1,7 +1,8 @@
 """ test: parcelona.util.wvpsat """
 
-from particula import u
 import pytest
+
+from particula import u
 
 from parcelona.util.wvpsat import buck_wvpsat, real_wvpsat
 
