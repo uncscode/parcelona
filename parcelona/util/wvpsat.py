@@ -3,7 +3,9 @@
 import numpy as np
 
 from particula import u
-from particula.util.input_handling import in_temperature
+from particula.util.input_handling import in_temperature, in_radius
+
+from parcelona.util.kelvin_radius import h2o_kelvin_radius
 
 
 def buck_wvpsat(temperature):
@@ -18,3 +20,18 @@ def buck_wvpsat(temperature):
     )*u.hPa * (temp < 0.0) + 6.1121 * np.exp(
         (18.678-temp/234.5)*(temp/(257.14+temp))
     )*u.hPa * (temp >= 0.0)
+
+
+def real_wvpsat(temperature, radius):
+    """ wvpsat with kelvin enhancement
+        https://en.wikipedia.org/wiki/Kelvin_equation
+    """
+
+    temperature = in_temperature(temperature)
+    radius = in_radius(radius)
+
+    kelvin_radius = h2o_kelvin_radius(temperature)
+
+    calc_wvpsat = buck_wvpsat
+
+    return calc_wvpsat(temperature) * np.exp(kelvin_radius/radius)
