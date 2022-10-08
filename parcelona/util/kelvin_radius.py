@@ -12,8 +12,8 @@ def kelvin_radius(surface_tension, molecular_weight, density, temperature):
     """
 
     temperature = in_temperature(temperature).to_base_units()
-    molecular_weight = in_molecular_weight(molecular_weight)
-    density = in_density(density)
+    molecular_weight = in_molecular_weight(molecular_weight).to_base_units()
+    density = in_density(density).to_base_units()
     surface_tension = in_handling(surface_tension, u.N/u.m)
 
     return 2 * surface_tension * molecular_weight / (
@@ -27,13 +27,8 @@ def h2o_kelvin_radius(temperature):
     temperature = in_temperature(temperature)
 
     return kelvin_radius(
-        surface_tension=0.072,
-        molecular_weight=18.015,
-        density=1000,
+        surface_tension=0.072 * u.N/u.m, 
+        molecular_weight=0.01815 * u.kg/u.mol, 
+        density=1000 * u.kg/u.m**3,
         temperature=temperature
-    ) * (temperature >= 0.0) + kelvin_radius(
-        surface_tension=0.058,
-        molecular_weight=18.015,
-        density=917,
-        temperature=temperature
-    ) * (temperature < 0.0)
+    )
