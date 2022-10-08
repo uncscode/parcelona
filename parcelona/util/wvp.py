@@ -6,14 +6,14 @@ from particula import u
 from particula.util.input_handling import in_temperature
 
 
-def buck_wvp(temperature, phase="liquid"):
+def buck_wvp(temperature):
     """ Buck equation for water vapor pressure
         https://en.wikipedia.org/wiki/Arden_Buck_equation
     """
 
     temp = in_temperature(temperature).m_as("degC")
 
-    if phase == "liquid" or temp >= 0.0:
+    if temp >= 0.0:
         return 6.1121 * math.exp(
             (18.678-temp/234.5)*(temp/(257.14+temp))
         )*u.hPa
