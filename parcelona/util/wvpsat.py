@@ -1,4 +1,4 @@
-""" parcelona.util.water_vapor_pressure """
+""" parcelona.util.wvpsat """
 
 import numpy as np
 
