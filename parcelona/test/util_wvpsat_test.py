@@ -1,7 +1,8 @@
 """ test: parcelona.util.wvpsat """
 
-from particula import u
 import pytest
+
+from particula import u
 
 from parcelona.util.wvpsat import buck_wvpsat, real_wvpsat
 
@@ -18,7 +19,7 @@ def test_buck_wvp():
     assert buck_wvpsat(temperature1) < buck_wvpsat(temperature2)
     assert (
         buck_wvpsat(temperature3).to(u.kPa).magnitude ==
-        pytest.approx(2.3, rel = 0.1)
+        pytest.approx(2.3, rel=0.1)
     )
 
 
