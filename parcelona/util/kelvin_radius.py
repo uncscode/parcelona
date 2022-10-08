@@ -8,6 +8,7 @@ from particula.constants import GAS_CONSTANT
 
 def kelvin_radius(surface_tension, molecular_weight, density, temperature):
     """ Kelvin radius (Neil's definition)
+        https://en.wikipedia.org/wiki/Kelvin_equation
     """
 
     temperature = in_temperature(temperature).to_base_units()

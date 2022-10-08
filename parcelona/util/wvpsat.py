@@ -24,6 +24,7 @@ def buck_wvpsat(temperature):
 
 def real_wvpsat(temperature, radius):
     """ wvpsat with kelvin enhancement
+        https://en.wikipedia.org/wiki/Kelvin_equation
     """
 
     temperature = in_temperature(temperature)
