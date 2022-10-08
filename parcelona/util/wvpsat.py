@@ -6,7 +6,7 @@ from particula import u
 from particula.util.input_handling import in_temperature
 
 
-def buck_wvp(temperature):
+def buck_wvpsat(temperature):
     """ Buck equation for water vapor pressure
         https://en.wikipedia.org/wiki/Arden_Buck_equation
     """
