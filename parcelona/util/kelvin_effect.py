@@ -1,19 +1,18 @@
-"""Kelvin effect.
-"""
+""" parcelona.kelvin_effect """
 
 import numpy as np
 
 
-def kelvin_vapor_pressure(
-    radius: float,
-    Psat: float,
-    material: str = "water",
-    **kwargs
-):
-    """Kelvin vapor pressure
-    """
-    kelvin_vapor_pressure = Psat * kelvin_enhancement(radius, material, **kwargs)
-    return kelvin_vapor_pressure
+# def kelvin_vapor_pressure(
+#     radius: float,
+#     Psat: float,
+#     material: str = "water",
+#     **kwargs
+# ):
+#     """Kelvin vapor pressure
+#     """
+#     kelvin_vapor_pressure = Psat * kelvin_enhancement(radius, material, **kwargs)
+#     return kelvin_vapor_pressure
 
 
 def kelvin_enhancement(
@@ -21,7 +20,7 @@ def kelvin_enhancement(
     material: str = "water",
     **kwargs
 ):
-    """Kelvin enhancement
+    """ Kelvin's enhancement of wvpsat due to curvature
     
         Parameters
         ----------
