@@ -7,7 +7,9 @@ from particula.util.input_handling import in_temperature
 
 
 def buck_wvp(temperature, phase="liquid"):
-    """ Buck equation for water vapor pressure """
+    """ Buck equation for water vapor pressure
+        https://en.wikipedia.org/wiki/Arden_Buck_equation
+    """
 
     temp = in_temperature(temperature).m_as("degC")
 
