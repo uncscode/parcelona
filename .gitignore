@@ -1,3 +1,12 @@
+# ignore .DS_Store on macs
+.DS_Store
+
+# ignore local .vscode folder
+.vscode/
+
+# ignore local development folder
+private_dev/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
