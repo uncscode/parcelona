@@ -1,8 +1,8 @@
 """ parcelona.kelvin_radius """
 
 from particula import u
-from particula.util.input_handling import in_temperature, in_density, in_molecular_weight
-from particula.util.input_handling import in_handling
+from particula.util.input_handling import in_temperature, in_density
+from particula.util.input_handling import in_handling, in_molecular_weight
 from particula.constants import GAS_CONSTANT
 
 
@@ -27,8 +27,8 @@ def h2o_kelvin_radius(temperature):
     temperature = in_temperature(temperature)
 
     return kelvin_radius(
-        surface_tension=0.072 * u.N/u.m, 
-        molecular_weight=0.01815 * u.kg/u.mol, 
+        surface_tension=0.072 * u.N/u.m,
+        molecular_weight=0.01815 * u.kg/u.mol,
         density=1000 * u.kg/u.m**3,
         temperature=temperature
     )
