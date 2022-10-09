@@ -1,9 +1,7 @@
 """ test: parcelona.kappa_kohler """
 
 import pytest
-
 from particula import u
-
 from parcelona.util.kappa_kohler import (
     particle_effective_activity,
     particle_phase_h2o_activity,
@@ -14,7 +12,6 @@ from parcelona.util.kelvin_radius import h2o_kelvin_radius
 dry_radius = 50e-9 * u.m
 wet_radius = 500e-9 * u.m
 kappa_ccn = 0.1 * u.dimensionless
-
 dry_radius_array = [100e-9, 150e-9] * u.m
 wet_radius_array = [500e-9, 151e-9] * u.m
 kappa_ccn_array = [0.1, 0.01] * u.dimensionless
