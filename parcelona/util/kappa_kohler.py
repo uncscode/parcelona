@@ -14,7 +14,6 @@ def particle_phase_h2o_activity(
     dry_radius,
     wet_radius,
     kappa_ccn,
-    **kwargs
 ):
     """ kappa equilibrium water activity over a material.
 
@@ -82,7 +81,6 @@ def particle_h2o_activation_radius(
     temperature,
     dry_radius,
     kappa_ccn,
-    **kwargs
 ):
     """ activation radius of a particle.
 
