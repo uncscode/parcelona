@@ -7,7 +7,6 @@ from particula import u
 from parcelona.util.kelvin_radius import kelvin_radius, h2o_kelvin_radius
 
 
-
 def test_kelvin_radius():
     """ test: parcelona.kelvin_radius """
     assert kelvin_radius(
