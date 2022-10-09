@@ -13,7 +13,7 @@ from parcelona.util.kelvin_radius import h2o_kelvin_radius
 def particle_phase_h2o_activity(
     dry_radius,
     wet_radius,
-    kappa_CCN,
+    kappa_ccn,
     **kwargs
 ):
     """ kappa equilibrium water activity over a material.
@@ -21,19 +21,19 @@ def particle_phase_h2o_activity(
     Parameters:
         dry_radius (float): dry radius of the particle [m]
         wet_radius (float): wet radius of the particle [m]
-        kappa_CCN (float): kappa CCN value of the particle [dimensionless]
+        kappa_ccn (float): kappa CCN value of the particle [dimensionless]
 
     Returns:
         float: water activity of the particle [dimensionless]
 
     Calculates the equilibrium water activity over an aerosol particle with
     specified hygroscopicity bathed in gas at a particular temperature. The
-    kappa parameter used is kappa_CCN, which specifies the kappa value at the
+    kappa parameter used is kappa_ccn, which specifies the kappa value at the
     critical supersaturation for cloud condensation nuclei (CCN). The kappa
     value changes with water activity for non-ideal mixtures. This more general
     kappa is call kappa_HGF, and is derived from water activity models. The
     kappa_HGF value at the CCN critical supersaturation (or activation point)
-    is kappa_CCN value.
+    is kappa_ccn value.
 
     References:
     We used the kappa definition presented by:
@@ -42,7 +42,7 @@ def particle_phase_h2o_activity(
     activity Atmospheric Chemistry and Physics, 7(8), 1961-1971.
     https://doi.org/10.5194/acp-7-1961-2007
 
-    For more information on kappa_CCN and kappa_HGF, see Figure 9 in:
+    For more information on kappa_ccn and kappa_HGF, see Figure 9 in:
     Gorkowski, K., Preston, T. C., &#38; Zuend, A. (2019).
     Relative-humidity-dependent organic aerosol thermodynamics via an efficient
     reduced-complexity model. Atmospheric Chemistry and Physics, June, 1-37.
@@ -50,7 +50,7 @@ def particle_phase_h2o_activity(
 
 
     """
-    return 1/(1 + kappa_CCN * (dry_radius/wet_radius)**3)
+    return 1/(1 + kappa_ccn * (dry_radius/wet_radius)**3)
 
 
 def particle_effective_activity(bulk_activity, kelvin_radius, wet_radius):
@@ -81,14 +81,14 @@ def particle_effective_activity(bulk_activity, kelvin_radius, wet_radius):
 def particle_h2o_activation_radius(
     temperature,
     dry_radius,
-    kappa_CCN,
+    kappa_ccn,
     **kwargs
 ):
     """ activation radius of a particle.
 
     Parameters:
         temperature (float): temperature of the bulk phase [K]
-        kappa_CCN (float): kappa CCN value of the particle [dimensionless]
+        kappa_ccn (float): kappa CCN value of the particle [dimensionless]
         dry_radius (float): dry radius of the particle [m]
 
     Returns:
@@ -112,7 +112,7 @@ def particle_h2o_activation_radius(
             bulk_activity=particle_phase_h2o_activity(
                 dry_radius,
                 wet_radius,
-                kappa_CCN
+                kappa_ccn
             ),
             kelvin_radius=h2o_kelvin_radius(temperature=temperature).magnitude,
             wet_radius=wet_radius
