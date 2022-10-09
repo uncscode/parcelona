@@ -1,4 +1,4 @@
-""" test: parcelona.kappa_kohler """
+""" test: parcelona.util.kappa_kohler """
 
 import pytest
 from particula import u

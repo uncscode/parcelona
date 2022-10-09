@@ -1,4 +1,4 @@
-""" parcelona.kappa_kohler """
+""" parcelona.util.kappa_kohler """
 
 import numpy as np
 from scipy.optimize import fminbound
