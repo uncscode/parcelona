@@ -4,9 +4,7 @@ import numpy as np
 from scipy.optimize import fminbound
 
 from particula import u
-from particula.util.input_handling import in_temperature, in_radius
-from particula.util.input_handling import in_handling
-
+from particula.util.input_handling import in_radius, in_handling
 from parcelona.util.kelvin_radius import h2o_kelvin_radius
 
 
@@ -121,8 +119,8 @@ def particle_h2o_activation(
         ).magnitude  # convert to float
 
     out = fminbound(
-        neg_activity, dry_radius.magnitude, dry_radius.magnitude * 1e4, xtol=1e-10,
-        full_output=True, disp=0
+        neg_activity, dry_radius.magnitude, dry_radius.magnitude * 1e4,
+        xtol=1e-10, full_output=True, disp=0
     )
     radius_critical, saturation_critical = out[:2]
     saturation_critical *= -1.0  # multiply by -1 to undo negative of activity
