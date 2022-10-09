@@ -2,8 +2,10 @@
 
 import numpy as np
 from scipy.optimize import fminbound
-from particula import u
-from particula.util.input_handling import in_radius, in_handling
+
+from particula.util.input_handling import in_radius
+from particula.util.input_handling import in_scalar, in_temperature
+
 from parcelona.util.kelvin_radius import h2o_kelvin_radius
 
 
@@ -44,10 +46,13 @@ def particle_phase_h2o_activity(
     reduced-complexity model. Atmospheric Chemistry and Physics, June, 1-37.
     https://doi.org/10.5194/acp-2019-495
 
-
     """
-    kappa_ccn = in_handling(kappa_ccn, u.dimensionless)
-    return 1/(1 + kappa_ccn * (in_radius(dry_radius)/in_radius(wet_radius))**3)
+
+    dry_radius = in_radius(dry_radius)
+    wet_radius = in_radius(wet_radius)
+    kappa_ccn = in_scalar(kappa_ccn)
+
+    return 1/(1 + kappa_ccn * (dry_radius/wet_radius)**3)
 
 
 def particle_effective_activity(bulk_activity, kelvin_radius, wet_radius):
@@ -72,8 +77,12 @@ def particle_effective_activity(bulk_activity, kelvin_radius, wet_radius):
     https://doi.org/10.5194/acp-7-1961-2007
 
     """
-    bulk_activity = in_handling(bulk_activity, u.dimensionless)
-    return bulk_activity * np.exp(kelvin_radius/in_radius(wet_radius))
+
+    bulk_activity = in_scalar(bulk_activity)
+    kelvin_radius = in_radius(kelvin_radius)
+    wet_radius = in_radius(wet_radius)
+
+    return bulk_activity * np.exp(kelvin_radius/wet_radius)
 
 
 def particle_h2o_activation(
@@ -106,6 +115,10 @@ def particle_h2o_activation(
     test: 50 nm particle, kappa = 0.1, has a crit sat ratio of ~1.003
     """
 
+    temperature = in_temperature(temperature)
+    dry_radius = in_radius(dry_radius)
+    kappa_ccn = in_scalar(kappa_ccn)
+
     def neg_activity(wet_radius):  # negative of the activity
         return -1.0 * particle_effective_activity(
             bulk_activity=particle_phase_h2o_activity(
@@ -115,13 +128,14 @@ def particle_h2o_activation(
             ),
             kelvin_radius=h2o_kelvin_radius(temperature=temperature),
             wet_radius=wet_radius
-        ).magnitude  # convert to float
+        ).m
 
     out = fminbound(
-        neg_activity, dry_radius.magnitude, dry_radius.magnitude * 1e4,
+        neg_activity, dry_radius.m, dry_radius.m * 1e4,
         xtol=1e-10, full_output=True, disp=0
     )
+
     radius_critical, saturation_critical = out[:2]
     saturation_critical *= -1.0  # multiply by -1 to undo negative of activity
 
-    return in_radius(radius_critical), saturation_critical * u.dimensionless
+    return in_radius(radius_critical), in_scalar(saturation_critical)
