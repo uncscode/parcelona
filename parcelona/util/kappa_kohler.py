@@ -11,8 +11,8 @@ from parcelona.util.kelvin_radius import h2o_kelvin_radius
 
 
 def particle_phase_h2o_activity(
-    dry_radius, 
-    wet_radius, 
+    dry_radius,
+    wet_radius,
     kappa_CCN,
     **kwargs
 ):
@@ -38,8 +38,8 @@ def particle_phase_h2o_activity(
     References:
     We used the kappa definition presented by:
     Petters, M. D.,; Kreidenweis, S. M. (2007). A single parameter
-    representation of hygroscopic growth and cloud condensation nucleus activity
-    Atmospheric Chemistry and Physics, 7(8), 1961-1971.
+    representation of hygroscopic growth and cloud condensation nucleus
+    activity Atmospheric Chemistry and Physics, 7(8), 1961-1971.
     https://doi.org/10.5194/acp-7-1961-2007
 
     For more information on kappa_CCN and kappa_HGF, see Figure 9 in:
@@ -70,8 +70,8 @@ def particle_effective_activity(bulk_activity, kelvin_radius, wet_radius):
     References:
     We used the definition of effective water activity presented by:
     Petters, M. D.,; Kreidenweis, S. M. (2007). A single parameter
-    representation of hygroscopic growth and cloud condensation nucleus activity
-    Atmospheric Chemistry and Physics, 7(8), 1961-1971.
+    representation of hygroscopic growth and cloud condensation nucleus
+    activity, Atmospheric Chemistry and Physics, 7(8), 1961-1971.
     https://doi.org/10.5194/acp-7-1961-2007
 
     """
@@ -89,7 +89,7 @@ def particle_h2o_activation_radius(
     Parameters:
         temperature (float): temperature of the bulk phase [K]
         kappa_CCN (float): kappa CCN value of the particle [dimensionless]
-        bulk_molecular_weight (float): molecular weight of the bulk phase [kg/mol]
+        dry_radius (float): dry radius of the particle [m]
 
     Returns:
         float: activation radius of the particle [m]
@@ -101,25 +101,25 @@ def particle_h2o_activation_radius(
     "activate", and will continue to freely grow even if the environmental
     saturation ratio decreases. If the satruation ratio is below 1 (<100% RH),
     then the activated particle will start to evaporate. If the particle
-    evaporates below the activation radius, then it will need to be reactivated.
+    evaporates below the activation radius, then it will need to be reactivated
 
 
     TODO: look at pyrcel's taylor expansion for the activation radius
-    test, 50 nm particle, kappa = 0.1, has a crit sat ratio of ~1.003
+    test: 50 nm particle, kappa = 0.1, has a crit sat ratio of ~1.003
     """
     def neg_activity(wet_radius):  # negative of the activity
-            return -1.0 * particle_effective_activity(
-                bulk_activity=particle_phase_h2o_activity(
-                    dry_radius,
-                    wet_radius,
-                    kappa_CCN
-                ),
-                kelvin_radius=h2o_kelvin_radius(temperature=temperature).magnitude,
-                wet_radius=wet_radius
-            )
+        return -1.0 * particle_effective_activity(
+            bulk_activity=particle_phase_h2o_activity(
+                dry_radius,
+                wet_radius,
+                kappa_CCN
+            ),
+            kelvin_radius=h2o_kelvin_radius(temperature=temperature).magnitude,
+            wet_radius=wet_radius
+        )
 
     out = fminbound(
-        neg_activity, dry_radius, dry_radius * 1e4, xtol=1e-10, 
+        neg_activity, dry_radius, dry_radius * 1e4, xtol=1e-10,
         full_output=True, disp=0
     )
     radius_critical, saturation_critical = out[:2]
